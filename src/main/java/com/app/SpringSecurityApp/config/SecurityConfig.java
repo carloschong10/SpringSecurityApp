@@ -25,10 +25,10 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity
+@EnableMethodSecurity   //para poder utilizar las anotaciones @PreAuthorize() en el TestAuthController
 public class SecurityConfig {
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -45,6 +45,16 @@ public class SecurityConfig {
                     http.anyRequest().denyAll(); //denyAll() recahaza todo lo que yo no especifique, es más restrictivo
 //                    http.anyRequest().authenticated(); //authenticated() aunque yo no especifique en los requestMatchers, si yo tengo credenciales correctas me va a dejar pasar, es más permisivo
                 })
+                .build();
+    }
+    */
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .csrf(csrf -> csrf.disable()) //no necesitamos tener habilitado esta proteccion por ahora, se utiliza mas que todo en tokens JWT para formularios
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
