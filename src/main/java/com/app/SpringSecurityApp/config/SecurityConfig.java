@@ -42,10 +42,16 @@ public class SecurityConfig {
 
                     //Configurar los endpoints privados
                     //validando por el authority
-                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyAuthority("CREATE", "READ");
-                    http.requestMatchers(HttpMethod.PUT, "/auth/put").hasAuthority("UPDATE");
-                    http.requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAuthority("DELETE");
-                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAuthority("REFACTOR");
+//                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyAuthority("CREATE", "READ");
+//                    http.requestMatchers(HttpMethod.PUT, "/auth/put").hasAuthority("UPDATE");
+//                    http.requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAuthority("DELETE");
+//                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAuthority("REFACTOR");
+
+                    //validando por el Role
+                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyRole(RoleEnum.DEVELOPER.name(), RoleEnum.ADMIN.name(), RoleEnum.USER.name());
+                    http.requestMatchers(HttpMethod.PUT, "/auth/put").hasAnyRole(RoleEnum.DEVELOPER.name(), RoleEnum.ADMIN.name());
+                    http.requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAnyRole(RoleEnum.DEVELOPER.name(), RoleEnum.ADMIN.name());
+                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasRole(RoleEnum.DEVELOPER.name());
 
                     //Configurar el resto de endpoits - NO ESPECIFICADOS
                     http.anyRequest().denyAll(); //denyAll() recahaza todo lo que yo no especifique, es más restrictivo
