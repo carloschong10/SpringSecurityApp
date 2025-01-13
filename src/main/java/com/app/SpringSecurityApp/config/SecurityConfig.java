@@ -1,5 +1,6 @@
 package com.app.SpringSecurityApp.config;
 
+import com.app.SpringSecurityApp.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,14 +65,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailService);
         return provider;
     }
 
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService() {
         List<UserDetails> userDetailsList = List.of(
                 User.withUsername("santiago")
@@ -86,7 +87,7 @@ public class SecurityConfig {
                         .build()
         );
         return new InMemoryUserDetailsManager(userDetailsList);
-    }
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
