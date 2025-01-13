@@ -1,5 +1,6 @@
 package com.app.SpringSecurityApp.config;
 
+import com.app.SpringSecurityApp.persistence.entity.RoleEnum;
 import com.app.SpringSecurityApp.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ import java.util.List;
 @EnableMethodSecurity   //para poder utilizar las anotaciones @PreAuthorize() en el TestAuthController
 public class SecurityConfig {
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -37,10 +38,14 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
                     //Configurar los endpoints públicos
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
 
                     //Configurar los endpoints privados
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("CREATE");
+                    //validando por el authority
+                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyAuthority("CREATE", "READ");
+                    http.requestMatchers(HttpMethod.PUT, "/auth/put").hasAuthority("UPDATE");
+                    http.requestMatchers(HttpMethod.DELETE, "/auth/delete").hasAuthority("DELETE");
+                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAuthority("REFACTOR");
 
                     //Configurar el resto de endpoits - NO ESPECIFICADOS
                     http.anyRequest().denyAll(); //denyAll() recahaza todo lo que yo no especifique, es más restrictivo
@@ -48,8 +53,8 @@ public class SecurityConfig {
                 })
                 .build();
     }
-    */
 
+    /*
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -58,6 +63,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+    */
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
