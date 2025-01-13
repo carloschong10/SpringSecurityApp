@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Set;
@@ -69,7 +70,7 @@ public class SpringSecurityAppApplication {
             /* Create Users */
             UserEntity userSantiago = UserEntity.builder()
                     .username("santiago")
-                    .password("1234")
+                    .password(new BCryptPasswordEncoder().encode("1234"))
                     .isEnabled(true)
                     .accountNoExpired(true)
                     .accountNoLocked(true)
@@ -79,7 +80,7 @@ public class SpringSecurityAppApplication {
 
             UserEntity userDaniel = UserEntity.builder()
                     .username("daniel")
-                    .password("123")
+                    .password("$2a$10$IRgyD9lLtQ/0gCxTIakiwOuDadiBJmSvNe0jHIiNFLlbkyIYoDChq")
                     .isEnabled(true)
                     .accountNoExpired(true)
                     .accountNoLocked(true)
@@ -89,7 +90,7 @@ public class SpringSecurityAppApplication {
 
             UserEntity userNoelia = UserEntity.builder()
                     .username("noelia")
-                    .password("123")
+                    .password("$2a$10$IRgyD9lLtQ/0gCxTIakiwOuDadiBJmSvNe0jHIiNFLlbkyIYoDChq")
                     .isEnabled(true)
                     .accountNoExpired(true)
                     .accountNoLocked(true)
@@ -99,7 +100,7 @@ public class SpringSecurityAppApplication {
 
             UserEntity userCarlos = UserEntity.builder()
                     .username("carlos")
-                    .password("123")
+                    .password("$2a$10$IRgyD9lLtQ/0gCxTIakiwOuDadiBJmSvNe0jHIiNFLlbkyIYoDChq")
                     .isEnabled(true)
                     .accountNoExpired(true)
                     .accountNoLocked(true)
